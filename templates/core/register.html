@@ -44,8 +44,10 @@
                   <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Nome do curso, ex.: Engenharia de Computação">
                 </div>
 				<div class="form-group">
-					<label for="exampleFormControlFile1">Por favor, nos forneça uma foto mostrando seu rosto</label>
-					<input type="file" class="form-control-file form-control-user" id="exampleFormControlFile1">
+					<div class="custom-file">
+					  <input type="file" class="custom-file-input" id="customFile">
+					  <label class="custom-file-label" for="customFile">Por favor, nos forneça uma foto mostrando seu rosto</label>
+					</div>
 				</div>
 				<div class="row">
 				<div class="col-sm">
@@ -69,14 +71,14 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
 </body>
 

@@ -143,7 +143,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuário</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -177,9 +177,76 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Relatório geral</h1>
-          <p class="mb-4">O relatório geral faz referência à quantidade de pessoas que compareceram ao recinto e qual dia da semana houveram mais pessoas presentes.</p>
-
+			<h1 class="h3 mb-2 text-gray-800">Relatório geral</h1>
+			<p class="mb-4">O relatório geral faz referência à quantidade de pessoas que compareceram ao recinto e qual dia da semana houveram mais pessoas presentes. <span class="font-weight-bold">É necessário um período de tempo</span>.</p>
+			<form class="mb-4" method="post">
+				{% csrf_token %}
+			  <div class="row">
+				  <div class="col-sm">
+					<label for="exampleInputEmail1">Data inicial</label>
+					<input type="date" class="form-control" id="exampleInputEmail1" name="datainicial">
+					<!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+				  </div>
+				  <div class="col-sm">
+					<label for="exampleInputPassword1">Data final</label>
+					<input type="date" class="form-control" id="exampleInputPassword1" name="datafinal">
+				  </div>
+			  </div>
+			  <button type="submit" class="btn btn-primary mt-3">Gerar relatório</button>
+			</form>
+			<div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Resultado</h6>
+                </div>
+                <div class="card-body">
+					{% if entradas %}
+					<p><span class="font-weight-bold">Período</span>: {{ data_inicial }} à {{ data_final }}</p>
+					<p><span class="font-weight-bold">Quantidade total de membros presentes no período:</span> {{ quantidade_membros }}</p>
+					<p><span class="font-weight-bold">Dia da semana em que houve maior presença de membros</span>: {{ frequencia }}</p>
+					<h6 class="font-weight-bold">Membros</h6>
+					<table class="table table-striped">
+					  <thead>
+						<tr>
+						  <th scope="col">#</th>
+						  <th scope="col">Nome</th>
+						  <th scope="col">Curso</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						{% for membro in membros_presentes %}
+						<tr>
+						  <th scope="row">{{ forloop.counter }}</th>
+						  <td>{{ membro.nome }}</td>
+						  <td>{{ membro.curso }}</td>
+						</tr>
+						{% endfor %}
+					  </tbody>
+					</table>
+					<h6 class="font-weight-bold">Entradas mais recentes em detalhe</h6>
+					<table class="table table-striped">
+					  <thead>
+						<tr>
+						  <th scope="col">#</th>
+						  <th scope="col">Data</th>
+						  <th scope="col">Hora</th>
+						  <th scope="col">Membro</th>
+						</tr>
+					  </thead>
+					  <tbody>
+						{% for entrada in entradas %}
+						<tr>
+						  <th scope="row">{{ forloop.counter }}</th>
+						  <td>{{ entrada.data }}</td>
+						  <td>{{ entrada.hora }}</td>
+						  <td>{{ entrada.membro }}</td>
+						</tr>
+						{% endfor %}
+					  </tbody>
+					</table>
+					{% else %}
+					<p>O resultado aparecerá aqui <i class="fas fa-spinner ml-2"></i></p>
+					{% endif %}
+            </div>
         </div>
         <!-- /.container-fluid -->
 

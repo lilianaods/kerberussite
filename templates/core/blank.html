@@ -11,7 +11,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Kerberus - Relatório por membro</title>
+  <title>Kerberus - Cadastrar membro</title>
 
   <!-- Custom fonts for this template-->
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -32,7 +32,7 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon">
+        <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-map"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Kerberus</sup></div>
@@ -51,35 +51,34 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-      <!-- Nav Item - Membros Collapse Menu -->
-      <li class="nav-item">
+    <!-- Nav Item - Membros Collapse Menu -->
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMembros" aria-expanded="true" aria-controls="collapseMembros">
           <i class="fas fa-fw fa-users"></i>
           <span>Membros</span>
         </a>
-        <div id="collapseMembros" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapseMembros" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="{% url 'registro' %}">Cadastrar</a>
+            <a class="collapse-item active" href="{% url 'registro' %}">Cadastrar</a>
             <a class="collapse-item" href="{% url 'listagem' %}">Lista de membros</a>
           </div>
         </div>
       </li>
 	  
       <!-- Nav Item - Relatórios Collapse Menu -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
           <span>Relatórios</span>
         </a>
-        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="{% url 'relatoriogeral' %}">Geral</a>
-            <a class="collapse-item active" href="{% url 'relatoriomembro' %}">Por membro</a>
+            <a class="collapse-item" href="{% url 'relatoriomembro' %}">Por membro</a>
           </div>
         </div>
-      </li>	  
-
-
+      </li>	 
+	  
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -121,25 +120,32 @@
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
+            <!-- <li class="nav-item dropdown no-arrow d-sm-none"> -->
+              <!-- <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                <!-- <i class="fas fa-search fa-fw"></i> -->
+              <!-- </a> -->
               <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+              <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown"> -->
+                <!-- <form class="form-inline mr-auto w-100 navbar-search"> -->
+                  <!-- <div class="input-group"> -->
+                    <!-- <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"> -->
+                    <!-- <div class="input-group-append"> -->
+                      <!-- <button class="btn btn-primary" type="button"> -->
+                        <!-- <i class="fas fa-search fa-sm"></i> -->
+                      <!-- </button> -->
+                    <!-- </div> -->
+                  <!-- </div> -->
+                <!-- </form> -->
+              <!-- </div> -->
+            <!-- </li> -->
+              <!-- <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+                <!-- <i class="fas fa-bell fa-fw"></i> -->
+                <!-- Counter - Alerts -->
+                <!-- <span class="badge badge-danger badge-counter">3+</span> -->
+              <!-- </a> -->
+              <!-- Dropdown - Alerts -->
             </li>
-			
+
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -175,81 +181,37 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+            <h1 class="h3 mb-2 text-gray-800">Cadastrar membro</h1>
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="mt-3">
+                        {% if membro_cadastrado %}
+                        <div class="alert alert-success" role="alert">
+                         O membro foi cadastrado com sucesso!
+                        </div>
+                        {% endif %}
+                        <form method="post">
+						    {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" name="nome" placeholder="Nome completo">
+                            </div>
+				            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" name="curso" placeholder="Nome do curso, ex.: Engenharia de Computação">
+                            </div>
+				            <div class="form-group">
+					            <div class="custom-file">
+					                <input type="file" class="custom-file-input" name="foto">
+					                <label class="custom-file-label" for="customFile">Por favor, nos forneça uma foto mostrando seu rosto</label>
+					            </div>
+				            </div>
+					        <button type="submit" class="btn btn-primary btn-user">
+					            Registrar membro
+					        </button>
+                        </form>
+                    </div>
+                </div>
+            </div> 
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Relatório por membro</h1>
-          <p class="mb-4">Este relatório diz respeito a um indivíduo específico. Contém os dados dos dias que o mesmo adentrou na sala, quais dias da semana foi mais presente no recinto e seus respectivos horários de entrada. <span class="font-weight-bold">Serão necessários o nome do membro e um período de tempo</span>.</p>
-			<form class="mb-4" method="post">
-				{% csrf_token %}	
-			  <div class="form-group">
-				<select class="custom-select" name="membro">
-				  <option selected>Escolha um membro</option>
-				  {% for membro in membros_cadastrados %}
-				  <option value="{{ membro.id }}">{{ membro.nome }}</option>
-				  {% endfor %}
-				</select>
-			  </div>
-			  <div class="row">
-				  <div class="col-sm">
-					<label for="exampleInputEmail1">Data inicial</label>
-					<input type="date" class="form-control" id="exampleInputEmail1" name="datainicial">
-					<!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-				  </div>
-				  <div class="col-sm">
-					<label for="exampleInputPassword1">Data final</label>
-					<input type="date" class="form-control" id="exampleInputPassword1" name="datafinal">
-				  </div>
-			  </div>
-			  <button type="submit" class="btn btn-primary mt-3">Gerar relatório</button>
-			</form>
-			<div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Resultado</h6>
-                </div>
-                <div class="card-body">
-                  {% if membro_selecionado %}
-				  <p><span class="font-weight-bold">Membro</span>: {{ membro_selecionado }}</p>
-				  <p><span class="font-weight-bold">Período</span>: {{ data_inicial }} à {{ data_final }}</p>
-				  <p><span class="font-weight-bold">Quantidade de dias em que esteve presente</span>: {{ quantidade_entradas }}</p>
-				  <p><span class="font-weight-bold">Dia da semana em que foi mais presente no período</span>: {{ frequencia }}</p>
-				  <h6 class="font-weight-bold">Entradas em detalhe</h6>
-				  <table class="table table-striped">
-					  <thead>
-						<tr>
-						  <th scope="col">#</th>
-						  <th scope="col">Data</th>
-						  <th scope="col">Hora</th>
-						</tr>
-					  </thead>
-					  <tbody>
-						{% for entrada in entradas %}
-						<tr>
-						  <th scope="row">{{ forloop.counter }}</th>
-						  <td>{{ entrada.data }}</td>
-						  <td>{{ entrada.hora }}</td>
-						</tr>
-						{% endfor %}
-					  </tbody>
-					</table>
-				  {% else %}
-				  <p>O resultado aparecerá aqui <i class="fas fa-spinner ml-2"></i></p>
-				  {% endif %}
-				</div>
-			</div>
-			{% if ultimos_membros_cadastrados %}
-			<div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Últimos membros cadastrados</h6>
-                </div>
-                <div class="card-body">
-                  <ul class="list-group">
-				  {% for membro in ultimos_membros_cadastrados %}
-				  <li class="list-group-item">{{ membro.nome }}</li>
-				  {% endfor %}
-				  </ul>
-				</div>
-			</div>
-			{% endif %}			
         </div>
         <!-- /.container-fluid -->
 
@@ -296,14 +258,14 @@
     </div>
   </div>
 
-  <!-- Bootstrap core JavaScript -->
+  <!-- Bootstrap core JavaScript-->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-  <!-- Core plugin JavaScript -->
+  <!-- Core plugin JavaScript-->
   <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
-  <!-- Custom scripts for all pages -->
+  <!-- Custom scripts for all pages-->
   <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
 </body>
